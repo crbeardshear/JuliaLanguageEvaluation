@@ -1,4 +1,4 @@
-module testie
+module helpers
 	export cumul_chunk
 	function cumul_chunk(array, max_array, node_number, num_nodes)
 	   len = length(array);

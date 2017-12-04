@@ -10,7 +10,7 @@ indices = collect(1:4);
 @everywhere include("helpers.jl");
 
 #first scatter, gather of maxvals through shared array
-y = @time map(x-> remotecall(testie.cumul_chunk,x,A,B,x,4)  , indices);
+y = @time map(x-> remotecall(helpers.cumul_chunk,x,A,B,x,4)  , indices);
 
 #sync to make sure all maxvals are assigned
 #call second scatter to do sums 
