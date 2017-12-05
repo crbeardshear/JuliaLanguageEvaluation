@@ -1,22 +1,30 @@
 function start()
 
-if nprocs()<4
-  addprocs(3)
+num_cores = Sys.CPU_CORES;
+
+if nprocs()<num_cores
+  addprocs(num_cores-1)
 end
 A = Array{Int64}(10000000);
-A = ones(A, Int64);
-B = Array{Int64}(4);
-indices = collect(1:4);
+A = ones(A);
+B = Array{Int64}(num_cores);
+C = Array{Array{Int64}}(num_cores);
 @everywhere include("helpers.jl");
 
-#first scatter, gather of maxvals through shared array
-y = @time map(x-> remotecall(helpers.cumul_chunk,x,A,B,x,4)  , indices);
+@time begin
+@sync for idx = 1:num_cores
+    @async C[idx] = remotecall_fetch(helpers.cumul_chunk,idx,A,B,idx,num_cores);	
+end
 
-#sync to make sure all maxvals are assigned
-#call second scatter to do sums 
-z = @time map(x -> remotecall( broadcast,x, +, fetch(y[x]) ,sum(B[1:x-1]) ) , indices[2:4]);
+@sync for idx = 2:num_cores
+    @async C[idx] = remotecall_fetch( broadcast,idx, +, C[idx] ,sum(B[1:idx-1]) );	
+end
+end
 
-w = [fetch(y[1]); fetch(z[1]); fetch(z[2]); fetch(z[3])]
+#println(C);
+
+w = collect(Iterators.flatten(C));
+
 end
 
 @time start()
