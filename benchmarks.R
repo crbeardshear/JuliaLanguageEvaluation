@@ -20,6 +20,16 @@ for(i in 1:100) {
 system("rm output.txt")
 
 #datam <- read.table("mpioutput.txt".header=F)
-plotAvg <- ggplot(data, aes(x = data[,1])) + geom_line(aes(y = data[,2], color = 'red')) + geom_line(aes(y = data[,3], color = 'blue' )) + scale_x_log10()
-plotMax <- ggplot(max, aes(x = maxV[,1])) + geom_line(aes(y = maxV[,2], color = 'red')) + geom_line(aes(y = maxV[,3], color = 'blue' )) + scale_x_log10()
-plotMin <- ggplot(min, aes(x = minV[,1])) + geom_line(aes(y = minV[,2], color = 'red')) + geom_line(aes(y = minV[,3], color = 'blue' )) + scale_x_log10()
+plot <- ggplot(average, aes(x = average[,1])) 
++ geom_point(tests[[]][]) 
++ geom_line(aes(y = average[,2], color = 'red')) 
++ geom_line(aes(y = average[,3], color = 'blue' )) 
++ geom_line(aes(y = maxV[,2], color = 'green')) 
++ geom_line(aes(y = maxV[,3], color = 'turqoise' )) 
++ geom_line(aes(y = minV[,2], color = 'violet')) + 
++ geom_line(aes(y = minV[,3], color = 'maroon' )) + scale_x_log10()
+
+for(i in 1:100) {
+	geom_point(data = tests[[i]], aes(y = tests[[i]][,2],color = 'lavendar'))
+	geom_point(data = tests[[i]], aes(y = tests[[i]][,3],color = 'lemon'))
+}

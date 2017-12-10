@@ -36,4 +36,3 @@ end
 start(10)
 
 @time A = start(parse(Int64,ARGS[1]))
-println(A)
