@@ -3,6 +3,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
 \usepackage{fixme}
+\usepackage{csquotes}
 \usepackage{todonotes}
 \usepackage{listings}
 \usepackage{biblatex}
@@ -40,7 +41,7 @@ Devon Johnson\\ \texttt{dnrjohnson@ucdavis.edu}
     basicstyle       = \ttfamily,
     keywordstyle     = \bfseries\color{blue},
     stringstyle      = \color{magenta},
-    commentstyle     = \color{ForestGreen},
+    commentstyle     = \color{green},
     showstringspaces = false,
 }
 
@@ -54,7 +55,7 @@ Devon Johnson\\ \texttt{dnrjohnson@ucdavis.edu}
 \todo{You can also use todo's like this.}
 %comments are written like this
 
-\section*{\normalsize History and motivation for Julia, why have yet another scripting language?}
+\section*{\normalsize History and motivation for Julia -- why have yet another scripting language?}
 
 Julia is meant to be the best of both worlds between:
 \begin{itemize}
@@ -73,10 +74,10 @@ Previously, many developers would use both higher and lower level languages for 
 
 Julia's speed is one of its key features. However, maintaining unbiased timing measurements for multiple languages is often difficult. As such, the examples used to analyze the Julia comparisons attempt neutrality but may contain imperfect code conversions. Taken from the Julia website, the speeds of multiple languages are displayed in Table 1\footnote{cite placeholder \url{https://julialang.org/benchmarks/}}.
 
-\begin{table}[]
+\begin{table}[ht]
 \centering
 \caption{Julia Website Timing Comparisons (Abridged)}
-\label{my-label}
+\label{Table-1}
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
 \hline
                               & \textbf{\begin{tabular}[c]{@{}c@{}}C\\ gcc\\ 4.8.5\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Julia\\ 0.6.0\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Fortran\\ gcc 4.8.5\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Java\\ 1.8.0\_14\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Matlab\\ R\\ `2017a'\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Python\\ 3.5.4\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}R\\ 3.3.1\end{tabular}} \\ \hline
@@ -93,10 +94,10 @@ Julia's speed is one of its key features. However, maintaining unbiased timing m
 
 From Table 1's numbers, it appears Julia is blisteringly fast for most applications. However, is this really a fair comparison? According to IBM Developer Jean Francois Puget, the Python benchmarks were not written as efficiently as possible. Consider his final timings after optimizations in Table 2\footnote{cite placeholder \href{https://www.ibm.com/developerworks/community/blogs/jfp/entry/Python_Meets_Julia_Micro_Performance?lang=en}{IBM developer works}}.
 
-\begin{table}[]
+\begin{table}[ht]
 \centering
 \caption{Optimized Python vs. Julia}
-\label{my-label}
+\label{Table-2}
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
 \hline
 Time in micro seconds        & \textbf{Julia} & \textbf{\begin{tabular}[c]{@{}c@{}}Python \\ (Opt)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Python\\ (Original)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Julia / \\ Python \\ (Opt)\end{tabular}} & \textbf{Numpy} & \textbf{Numba} & \textbf{Cython} \\ \hline
@@ -141,7 +142,7 @@ Finally, as with any language, Julia has certain guidelines to keep in mind when
 \item Performance tips to speed up Julia code. 
 \url{https://docs.julialang.org/en/latest/manual/performance-tips/} 
 
-\item Once again, timing tests are often linked to how the language is put together. Julia implements .\string^ in Julia (without C or C++) while Octave implements it with C; because of this, Octave is faster for this problem. \url{https://stackoverflow.com/questions/19208014/is-the-julia-language-really-as-fast-as-it-claims}
+\item Once again, timing tests are often linked to how the language is put together. Julia implements .\string^ in Julia (without C or C++) while Octave implements it with C; because of this, \href{https://stackoverflow.com/questions/19208014/is-the-julia-language-really-as-fast-as-it-claims}{Octave is faster for this problem.}
 
 \item A paper on Julia’s dev design decisions made to prioritize performance.
 \url{https://arxiv.org/pdf/1209.5145v1.pdf}
@@ -226,25 +227,32 @@ start(10)
 \end{lstlisting}
 
 %Graphic inclusion, won't work with overleaf
-\includegraphics[width=\textwidth]{./plot.png}
+\includegraphics[width=\textwidth]{plot.png}
 
-\begin{table}[]
+
+\begin{table}[ht]
 \centering
-\caption{Cumulative Sum Performance in OpenMPI C vs. Julia \(ms\)}
-\label{my-label}
+\caption{Cumulative Sum Performance in OpenMPI C vs. Julia (ms)}
+\label{Test-Cases}
 \begin{tabular}{|l|c|c|c|c|c|c|}
 \hline
 Size of Array        & \textbf{\begin{tabular}[c]{@{}c@{}}Julia \\ Average\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}OpenMPI \\ Average\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Julia\\ Worst Case\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}OpenMPI \\ Worst Case\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Julia \\ Best Case\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}OpenMPI \\ Best Case\end{tabular}}  \\ \hline
-\textbf{10} 		& 25.06 & 2.06 & 64.00 & 4.83 & 18.53 & 1.10 \\ \hline
-\textbf{100} 		& 24.89 & 1.99 & 42.57 & 7.42 & 19.08 & 1.14\\ \hline
-\textbf{1000} 		& 25.05 & 1.91 & 72.44 & 5.55 & 19.06 & 1.14\\ \hline
-\textbf{10,000} 	& 26.00 & 2.05 & 50.53 & 6.93 & 19.41 & 1.15\\ \hline
-\textbf{100,000} 	& 29.36 & 2.18 & 63.52 & 5.09 & 22.57 & 1.28\\ \hline
-\textbf{1,000,000} 	& 200.17  & 5.12 & 357.11  & 17.04 & 147.92  & 2.84\\ \hline
-\textbf{10,000,000} & 928.67 & 29.61  & 1,724.76 & 70.60 & 695.23 & 16.39\\ \hline
+\textbf{10} 		& 20.91 & 17.70   & 28.99    & 40.14  & 18.61  & 10.75\\ \hline
+\textbf{100} 		& 20.78 & 23.75   & 40.87    & 49.02  & 18.74  & 10.86\\ \hline
+\textbf{1000} 		& 20.86 & 21.84   & 31.87    & 53.15  & 18.60  & 11.41\\ \hline
+\textbf{10,000} 	& 21.14 & 21.68   & 31.77    & 43.93  & 18.98  & 10.79\\ \hline
+\textbf{100,000} 	& 24.23 & 24.19   & 35.14    & 65.61  & 21.84  & 12.46\\ \hline
+\textbf{1,000,000} 	& 161.75 & 40.34  & 272.53   & 69.22  & 149.27 & 28.04\\ \hline
+\textbf{10,000,000} & 766.60 & 195.85 & 1,083.26 & 231.74 & 696.51 & 170.66\\ \hline
 
 \end{tabular}
 \end{table}
+
+
+	As is apparent Table 3, Julia, when compared to the C version of OpenMPI, does very well at lower sample sizes. The high performance at low sample sizes indicates several things. First of all, Julia's parallelization through message passing is at least on par if not better than that of OpenMPIi in terms of latency. This comes from the fact that we send more messages with Julia because of the requirement of both function calls and variable requests to be done through message passing, yet we still see a performance on par, if not better than the C implementation of MPI in some cases. However, these tests were performed entirely locally with both implementations. As a result latency over messages is extremely low. Because of the greater volume of messages required by Julia, the performance gain would likely diminish when working on a network cluster, especially if it is not particularly low latency. What is particularly interesting is the across the board better performance ceiling of Julia at low sample sizes. This could be due to less overhead of initialization of nodes for parallelization. Where MPI requires initialization and a variety of variables to be set for each node, Julia only invokes the information required per node from the master node and goes from there.
+
+	Interestingly, Julia appears to struggle when given larger tasks compared to MPI. Due to the very sudden spike in time of the algorithm when compared to MPI, we know that for some reason, the large array size is causing a bottleneck. This is most likely one of two things, either the Message Passing interface of Julia does not have very high throughput, or Julia is having issues performing large-scale array comutations. It seems highly unlikely that Julia cannot handle arrays of that large a size given the focus on large array computation by the developers. One issue at hand that could be due to the large array size is vectorization, which causes slowdown in Julia due to extremely efficient for loop implementation.\footnote{Dahua Lin, Sep. 4, 2013,\url{https://julialang.org/blog/2013/09/fast-numeric}} Despite the issue of vectorization though, each of the potentially vectorized commands are in fact specific calls for large arrays. Thus it seems doubtful the Julia developers would write their built in reduction functions without large arrays in mind. Given this information, it seems likely that the implementation of message passing, though low on latency, does not support very high throughput. The reasoning for this is with small sample sizes, the latency of the execution as a whole will be most strongly affected by the latrency and the throughput can be ignored. However, as you grow, if you have a lower throughput system, the bottleneck will begin to grow your overall delay by a wider margin as happened with Julia vs MPI. 
+
 
 \printbibliography
 

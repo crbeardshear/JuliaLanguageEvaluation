@@ -65,8 +65,8 @@ void cumulsums()
 int main(int argc,char **argv)
 {  
 	int i;
-	init(argc,argv);
 	clock_t begin = clock();
+	init(argc,argv);
 	cumulsums();
 	MPI_Finalize();
 	clock_t end = clock();

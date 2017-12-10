@@ -23,10 +23,10 @@ system("rm output.txt")
 
 plot <- ggplot(average, aes(x = average[,1])) +
  geom_line(aes(y = average[,2], colour = 'Average')) +
- geom_line(aes(y = average[,3], colour = 'Average' )) +
+ geom_line(aes(y = average[,3], colour = 'Average' ), linetype="dotted") +
  geom_line(aes(y = maxV[,2], colour = 'Max')) +
- geom_line(aes(y = maxV[,3], colour = 'Max' )) +
+ geom_line(aes(y = maxV[,3], colour = 'Max' ), linetype="dotted") +
  geom_line(aes(y = minV[,2], colour = 'Min')) +
- geom_line(aes(y = minV[,3], colour = 'Min' )) + 
+ geom_line(aes(y = minV[,3], colour = 'Min' ), linetype="dotted") + 
  labs(size="Values", x = "N", y = "Seconds", title = "Time tests of Julia vs MPI Code on a local machine") + scale_x_log10()
 
