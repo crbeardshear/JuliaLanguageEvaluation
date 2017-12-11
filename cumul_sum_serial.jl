@@ -1,9 +1,9 @@
 function start(N)
-#doesn't improve performance by much
+#initializing the variables beforehand doesn't improve performance by much
 A = Array{Int64}{N}
 B = Array{Int64}{N}
 A = rand(1:32,N)
-@time B = cumsum(A)
+@time B = accumulate(+,A)
 end
 
 println("Compile time:")
